@@ -49,7 +49,7 @@ Product vo=(Product)request.getAttribute("vo");
 		<td class="ct_write01">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="105">${vo.prodName}</td>
+					<td width="105">${product.prodName}</td>
 					<td></td>
 				</tr>
 			</table>
@@ -64,7 +64,7 @@ Product vo=(Product)request.getAttribute("vo");
 			상품상세정보 <img  src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${vo.prodDetail}</td>
+		<td class="ct_write01">${product.prodDetail}</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -75,7 +75,7 @@ Product vo=(Product)request.getAttribute("vo");
 			제조일자<img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${vo.manuDate}</td>
+		<td class="ct_write01">${product.manuDate}</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -85,7 +85,7 @@ Product vo=(Product)request.getAttribute("vo");
 			가격<img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${vo.price}</td>
+		<td class="ct_write01">${product.price}</td>
 	</tr>
 
 	<tr>
@@ -99,7 +99,7 @@ Product vo=(Product)request.getAttribute("vo");
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td height="26">
-						<img src="${vo.fileName}"/>
+						<img src="${product.fileName}"/>
 					</td>
 				</tr>
 			</table>

@@ -22,7 +22,7 @@ import com.model2.mvc.service.product.ProductService;
 //==> 회원관리 Controller
 @Controller
 public class ProductController {
-	
+
 	///Field
 	@Autowired
 	@Qualifier("productServiceImpl")
@@ -53,14 +53,14 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/getProduct.do")
-	public String getProduct(@RequestParam("prodNo")int prodNo, Model model) throws Exception{
+	public String getProduct(@RequestParam("prodNo")int prodNo, Model model,
+							@RequestParam("menu")String menu) throws Exception{
 		
 		System.out.println("/getProduct.do");
 		
-		Product prod = productService.getProduct(prodNo);
+		Product product = productService.getProduct(prodNo);
 		
-		model.addAttribute("prod", prod);
-		String menu = (String) model.getAttribute("menu");
+		model.addAttribute("product", product);
 		
 System.out.println("menu : "+menu);			//menu값 확인
 
@@ -68,8 +68,7 @@ System.out.println("menu : "+menu);			//menu값 확인
 				menu = "other";
 				return "forward:/product/readProduct.jsp";	
 			}
-
-
+			
 			if(menu.equals("manage")) {
 				return "forward:/product/updateProduct.jsp";
 			}
@@ -77,27 +76,49 @@ System.out.println("menu : "+menu);			//menu값 확인
 		model.addAttribute("prodNo", prodNo);
 		return "forward:/product/getProduct.jsp?menu="+menu;	
 	}
-
-//	public String listProduct(@ModelAttribute("product")Product product) throws Exception{
-//		System.out.println("/addProduct.do");
-//		
-//		productService.addProduct(product);
-//		
-//		return "forward:/product/readProduct.jsp"; 
-//	}
-//	public String updateProduct(@ModelAttribute("product")Product product) throws Exception{
-//		System.out.println("/addProduct.do");
-//		
-//		productService.addProduct(product);
-//		
-//		return "forward:/product/readProduct.jsp"; 
-//	}
-//	public String updateProductView(@ModelAttribute("product")Product product) throws Exception{
-//		System.out.println("/addProduct.do");
-//		
-//		productService.addProduct(product);
-//		
-//		return "forward:/product/readProduct.jsp"; 
-//	}
+	
+	@RequestMapping("/listProduct.do")
+	public String listProduct(@ModelAttribute("search")Search search, Model model) throws Exception{
+		
+		System.out.println("/listProduct.do");
+		
+		if(search.getCurrentPage()==0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String, Object> map = productService.getProductList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);		
+		
+		return "forward:/product/listProduct.jsp";
+	}
+	@RequestMapping("/updateProduct.do")
+	public String updateProduct(@ModelAttribute("product")Product product, Model model) throws Exception{
+		
+		System.out.println("/updateProduct.do");
+	
+		productService.updateProduct(product);
+				
+		model.addAttribute("product", product);
+		
+		return "forward:/getProduct.do?prodNo="+product.getProdNo();
+	}
+	@RequestMapping("/updateProductView")
+	public String updateProductView(@RequestParam("prodNo")int prodNo, Model model) throws Exception{
+		
+		System.out.println("/updateProductView.do");
+		
+		Product product = productService.getProduct(prodNo);
+		
+		model.addAttribute("product", product);
+		
+		return "forward:/product/updateProduct.jsp";
+	}
 	
 }
