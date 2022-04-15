@@ -74,6 +74,7 @@ System.out.println("menu : "+menu);			//menu값 확인
 			}
 		model.addAttribute("menu", menu);
 		model.addAttribute("prodNo", prodNo);
+
 		return "forward:/product/getProduct.jsp?menu="+menu;	
 	}
 	
@@ -98,6 +99,7 @@ System.out.println("menu : "+menu);			//menu값 확인
 		
 		return "forward:/product/listProduct.jsp";
 	}
+	
 	@RequestMapping("/updateProduct.do")
 	public String updateProduct(@ModelAttribute("product")Product product, Model model) throws Exception{
 		
@@ -107,8 +109,9 @@ System.out.println("menu : "+menu);			//menu값 확인
 				
 		model.addAttribute("product", product);
 		
-		return "forward:/getProduct.do?prodNo="+product.getProdNo();
+		return "redirect:/getProduct.do?menu=manage&prodNo="+product.getProdNo();
 	}
+	
 	@RequestMapping("/updateProductView")
 	public String updateProductView(@RequestParam("prodNo")int prodNo, Model model) throws Exception{
 		
